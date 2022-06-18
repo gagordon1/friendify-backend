@@ -2,10 +2,18 @@ const express = require('express')
 const app = express();
 const dotenv = require("dotenv")
 const awsController = require('./aws-controller')
+const config = require('./config')
 dotenv.config()
 
 const port = process.env.PORT || 3000;
+const origin = config.getOrigin()
 app.use(express.json())
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  next();
+});
 
 app.get('/', (req, res) => {
   res.send('Friendify Backend Server :)')
@@ -25,7 +33,7 @@ app.get('/refresh-token/:userId', async (req, res) => {
     res.send(result.Item.RefreshToken.S);
   }catch(error){
     console.log(error);
-    res.send(error.message)
+    res.send({message : error.message})
   }
 })
 
@@ -45,11 +53,11 @@ app.get('/refresh-token/:userId', async (req, res) => {
 app.post('/refresh-token', async (req, res) => {
   try{
     const result = await awsController.uploadRefreshToken(req.body.userId, req.body.refreshToken)
-    res.send("Success");
+    res.send({message : "Success"});
   }
   catch(error){
     console.log(error);
-    res.send(error.message)
+    res.send({message: error.message})
   }
 
 })
