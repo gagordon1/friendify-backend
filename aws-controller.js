@@ -2,7 +2,7 @@ var AWS = require('aws-sdk');
 
 module.exports = {
 
-    uploadRefreshToken : function (userId, refreshToken){
+    uploadRefreshToken : async function (userId, refreshToken){
 
       AWS.config.update({region: process.env.REGION});
 
@@ -18,15 +18,7 @@ module.exports = {
       };
 
       // Call DynamoDB to add the item to the table
-      ddb.putItem(params, function(err, data) {
-      if (err) {
-        console.log("Error", err);
-        return err.message;
-      } else {
-        console.log("Success", data);
-        return data;
-      }
-      });
+      return await ddb.putItem(params).promise()
     },
 
     getRefreshToken : async function (userId){
