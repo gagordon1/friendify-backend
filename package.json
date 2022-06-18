@@ -1,0 +1,24 @@
+{
+  "name": "friendify-backend",
+  "version": "1.0.0",
+  "description": "connect to spotify user api",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagordon1/friendify-backend.git"
+  },
+  "author": "Garrett Gordon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gagordon1/friendify-backend/issues"
+  },
+  "homepage": "https://github.com/gagordon1/friendify-backend#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1157.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
+}
