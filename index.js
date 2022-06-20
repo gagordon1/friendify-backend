@@ -24,13 +24,13 @@ app.get('/', (req, res) => {
 //    userId : String
 //}
 // 200 : Gets user's refresh token
-// Response: refreshToken (String)
+// Response: {refreshToken : String}
 // 404 : Unexpected Server Error
 // 400 : Request Error (user did not exist)
 app.get('/refresh-token/:userId', async (req, res) => {
   try{
     const result = await awsController.getRefreshToken(req.params.userId);
-    res.send(result.Item.RefreshToken.S);
+    res.send({refreshToken : result.Item.RefreshToken.S});
   }catch(error){
     console.log(error);
     res.send({message : error.message})
